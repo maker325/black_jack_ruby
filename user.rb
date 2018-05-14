@@ -2,7 +2,7 @@ require_relative 'card'
 
 class User
   attr_reader :current_cards, :score
-  attr_accessor :money, :bet, :name
+  attr_accessor :money, :bet
 
   def initialize
     @money = 100
