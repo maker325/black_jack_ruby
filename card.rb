@@ -6,4 +6,8 @@ class Card
     @lear = lear
     @value = value
   end
+
+  def ace?
+    name == 'Ace'
+  end
 end

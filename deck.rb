@@ -19,9 +19,9 @@ class Deck
   private
 
   def create_deck
-    LEARS.each do |suit|
+    LEARS.each do |lear|
       CARD_NAMES.each_with_index do |name, index|
-        @cards << Card.new(name, suit, VALUES[index])
+        @cards << Card.new(name, lear, VALUES[index])
       end
     end
   end
