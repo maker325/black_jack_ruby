@@ -1,25 +1,17 @@
-# here will be description of current game for gamer
-
-require_relative 'game'
-
 class Interface
-  def initialize(main)
-    @main = main
-  end
-
-  protected
-
   def chose_name
     puts 'Игра Black Jack.'
     puts 'Для начала введите своё имя:'
     gets.chomp
   end
 
-  def action_gamers_turn
+  def gamers_turn
+    line
     puts 'Выберите действие:'
     puts '1. Пропустить. Передать ход диллеру.'
     puts '2. Взять одну карту.'
     puts '3. Открыть карты.'
+    line
   end
 
   def dealers_turn
@@ -30,9 +22,10 @@ class Interface
     puts 'Диллер взял дополнительную карту.'
   end
 
-  def player_extra(bulean)
-    return puts 'У вас уже три карты.' unless bulean
+  def player_extra(bulean, user)
+    return puts 'У вас уже три карты.' if bulean
     puts 'Вы взяли дополнительную карту.'
+    show_cards_score(user)
   end
 
   def show_player(user)
@@ -41,9 +34,10 @@ class Interface
   end
 
   def show_cards_score(user)
-    puts "Текущие деньги: #{user.count_score}"
-    user.current_cards.each { |card| puts "#{card.lear}#{card.name} " }
-    puts '--------------------------------------'
+    line
+    puts "Текущие очки: #{user.count_score}"
+    user.current_cards.each { |card| puts "#{card.lear} #{card.name} " }
+    line
   end
 
   def current_money(money)
@@ -71,5 +65,9 @@ class Interface
   def lose_money
     puts 'Недостаточно денег для продолжения игры.'
     exit
+  end
+
+  def line
+    puts '--------------------------------------'
   end
 end

@@ -2,12 +2,13 @@ require_relative 'card'
 
 class User
   attr_reader :current_cards, :score
-  attr_accessor :money
+  attr_accessor :money, :name
 
-  def initialize
+  def initialize(name = 'dealer')
     @money = 100
     @current_cards = []
     @score = 0
+    @name = name
   end
 
   def bet!
@@ -15,8 +16,12 @@ class User
   end
 
   def count_score
-    @score = current_cards.sum(&:value)
+    @score = 0
+    @current_cards.each do |card|
+      @score += card.value
+    end
     @score -= 10 if score > 21 && aces?
+    @score
   end
 
   def card_distribution(deck)

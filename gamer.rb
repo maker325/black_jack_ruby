@@ -1,9 +1,9 @@
 require_relative 'user'
 
 class Gamer < User
-  attr_reader :name
+  attr_accessor :name
 
-  def initialize(name)
+  def initialize(name = 'Gamer')
     @name = name
     super
   end

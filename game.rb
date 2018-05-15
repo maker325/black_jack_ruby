@@ -1,5 +1,4 @@
-# here will be the all rules of the games
-require_relative 'interface'
+require_relative 'interface.rb'
 require_relative 'gamer'
 require_relative 'user'
 require_relative 'deck'
@@ -25,7 +24,7 @@ class Game
     @deck = Deck.new
     round
     @interface.show_cards_score(@gamer)
-    @interface.gamers_turn
+    gamers_turn
   end
 
   def money?
@@ -43,11 +42,15 @@ class Game
   end
 
   def gamers_turn
-    @interface.action_gamers_turn
+    @interface.gamers_turn
     choice = gets.chomp.to_i
     send ACTIONS_MENU[choice] if ACTIONS_MENU[choice]
-    reavel_cards unless can_extra? & dealer_can_extra?
-    gamers_turn
+    gamers_turn if can_continue?
+    reavel_cards
+  end
+
+  def can_continue?
+    can_extra? || dealer_can_extra?
   end
 
   def can_extra?
@@ -60,7 +63,7 @@ class Game
 
   def extra_card
     @gamer.take_card(@deck) if can_extra?
-    @interface.player_extra(can_extra?)
+    @interface.player_extra(can_extra?, @gamer)
   end
 
   def dealer_extra
@@ -71,14 +74,14 @@ class Game
   def dealers_turn
     @interface.dealers_turn
     sleep(1)
-    return @interface.gamers_turn if @dealer.count_score >= 17
+    return gamers_turn if @dealer.count_score >= 17
     dealer_extra if dealer_can_extra?
   end
 
   def reavel_cards
-    show_player(@gamer)
+    @interface.show_player(@gamer)
     @interface.show_cards_score(@gamer)
-    show_player(@dealer)
+    @interface.show_player(@dealer)
     @interface.show_cards_score(@dealer)
     calc_results
     play_again?
@@ -116,3 +119,6 @@ class Game
     play_again?
   end
 end
+
+game = Game.new
+game
