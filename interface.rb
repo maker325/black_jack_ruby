@@ -69,4 +69,8 @@ class Interface
   def line
     puts '--------------------------------------'
   end
+
+  def dealers_turned?
+    puts 'Передайте в начале ход дилеру.!'
+  end
 end

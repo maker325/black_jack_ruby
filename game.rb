@@ -22,6 +22,7 @@ class Game
   def start_game
     return @interface.lose_money unless money?
     @deck = Deck.new
+    @dealers_turned = false
     round
     @interface.show_cards_score(@gamer)
     gamers_turn
@@ -72,6 +73,7 @@ class Game
   end
 
   def dealers_turn
+    @dealers_turned = true
     @interface.dealers_turn
     sleep(1)
     return gamers_turn if @dealer.count_score >= 17
@@ -79,6 +81,8 @@ class Game
   end
 
   def reavel_cards
+    @interface.dealers_turned? unless @dealers_turned
+    return gamers_turn unless @dealers_turned
     @interface.show_player(@gamer)
     @interface.show_cards_score(@gamer)
     @interface.show_player(@dealer)
