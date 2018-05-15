@@ -67,4 +67,9 @@ class Interface
     puts '1. Да'
     puts '2. Нет'
   end
+
+  def lose_money
+    puts 'Недостаточно денег для продолжения игры.'
+    exit
+  end
 end

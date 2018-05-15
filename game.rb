@@ -21,10 +21,15 @@ class Game
   end
 
   def start_game
+    return @interface.lose_money unless money?
     @deck = Deck.new
     round
     @interface.show_cards_score(@gamer)
     @interface.gamers_turn
+  end
+
+  def money?
+    (@gamer.money > 10) & (@dealer.money > 10)
   end
 
   def round
