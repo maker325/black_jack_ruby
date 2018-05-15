@@ -29,8 +29,7 @@ class Interface
   end
 
   def show_player(user)
-    return puts user.name.to_s if user.name
-    puts 'Диллер'
+    puts "Результаты #{user.name}:"
   end
 
   def show_cards_score(user)
