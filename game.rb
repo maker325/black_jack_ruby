@@ -44,7 +44,7 @@ class Game
 
   def gamers_turn
     @interface.gamers_turn
-    choice = gets.chomp.to_i
+    choice = @interface.chose_action
     send ACTIONS_MENU[choice] if ACTIONS_MENU[choice]
     reavel_cards
   end
@@ -114,7 +114,7 @@ class Game
 
   def play_again?
     @interface.play_again?
-    choice = @interface.ending_chose
+    choice = @interface.chose_action
     start_game if choice == 1
     exit if choice == 2
     play_again?

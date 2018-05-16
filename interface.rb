@@ -72,7 +72,7 @@ class Interface
     puts 'Передайте в начале ход дилеру.!'
   end
 
-  def ending_chose
+  def chose_action
     gets.chomp.to_i
   end
 end
