@@ -20,7 +20,8 @@ class User
     @current_cards.each do |card|
       @score += card.value
     end
-    @score -= 10 if score > 21 && aces?
+    @score -= 10 if score > 21 && aces? == 1
+    @score -= 20 if score > 21 && aces? == 2
     @score
   end
 
@@ -32,13 +33,14 @@ class User
 
   def take_card(deck)
     card = deck.cards[0]
-    current_cards << card
-    deck.cards.delete(card)
+    current_cards << deck.cards.delete(card)
   end
 
   private
 
   def aces?
-    current_cards.any?(&:ace?)
+    @aces = 0
+    @current_cards.each { |card| @aces += 1 if card.name == 'Ace' }
+    @aces
   end
 end

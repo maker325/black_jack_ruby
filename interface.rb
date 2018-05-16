@@ -22,10 +22,8 @@ class Interface
     puts 'Диллер взял дополнительную карту.'
   end
 
-  def player_extra(bulean, user)
-    return puts 'У вас уже три карты.' if bulean
+  def player_extra
     puts 'Вы взяли дополнительную карту.'
-    show_cards_score(user)
   end
 
   def show_player(user)
@@ -72,5 +70,9 @@ class Interface
 
   def dealers_turned?
     puts 'Передайте в начале ход дилеру.!'
+  end
+
+  def ending_chose
+    choice = gets.chomp.to_i
   end
 end

@@ -29,7 +29,7 @@ class Game
   end
 
   def money?
-    (@gamer.money > 10) & (@dealer.money > 10)
+    (@gamer.money > 10) && (@dealer.money > 10)
   end
 
   def round
@@ -46,12 +46,7 @@ class Game
     @interface.gamers_turn
     choice = gets.chomp.to_i
     send ACTIONS_MENU[choice] if ACTIONS_MENU[choice]
-    gamers_turn if can_continue?
     reavel_cards
-  end
-
-  def can_continue?
-    can_extra? || dealer_can_extra?
   end
 
   def can_extra?
@@ -64,20 +59,22 @@ class Game
 
   def extra_card
     @gamer.take_card(@deck) if can_extra?
-    @interface.player_extra(can_extra?, @gamer)
+    @interface.player_extra
+    dealers_turn
   end
 
   def dealer_extra
     @dealer.take_card(@deck)
     @interface.dealer_extra
+    reavel_cards
   end
 
   def dealers_turn
     @dealers_turned = true
     @interface.dealers_turn
     sleep(1)
-    return gamers_turn if @dealer.count_score >= 17
-    dealer_extra if dealer_can_extra?
+    return reavel_cards if @dealer.count_score >= 17
+    dealer_extra if dealer_can_extra? && @gamer.count_score < 22
   end
 
   def reavel_cards
@@ -108,8 +105,8 @@ class Game
   end
 
   def winner
-    return @gamer if @dealer.score > 21
     return @dealer if @gamer.score > 21
+    return @gamer if @dealer.score > 21
     return @gamer if @gamer.score > @dealer.score && @gamer.score <= 21
     return @dealer if @dealer.score > @gamer.score && @dealer.score <= 21
     'draw' if @dealer.score == @gamer.score
@@ -117,7 +114,7 @@ class Game
 
   def play_again?
     @interface.play_again?
-    choice = gets.chomp.to_i
+    choice = @interface.ending_chose
     start_game if choice == 1
     exit if choice == 2
     play_again?
