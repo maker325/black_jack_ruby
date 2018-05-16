@@ -73,6 +73,6 @@ class Interface
   end
 
   def ending_chose
-    choice = gets.chomp.to_i
+    gets.chomp.to_i
   end
 end
