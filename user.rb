@@ -20,11 +20,7 @@ class User
     @current_cards.each do |card|
       @score += card.value
     end
-    i = aces
-    while i > 0
-      @score -= 10 if score > 21
-      i -= 1
-    end
+    aces.times { @score -= 10 if score > 21 }
     @score
   end
 
